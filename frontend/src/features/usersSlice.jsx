@@ -12,7 +12,8 @@ const initialState = {
         { field:'gender', headerName:'Gender' }
       ],
     error:'',
-    open:false
+    open:false,
+    loading:true
 }
 const userSlice= createSlice({
     name:'users',
@@ -46,17 +47,16 @@ const userSlice= createSlice({
             state.error = action.payload
         })
         .addCase(getUsers.pending,(state,action)=>{
-            state.status = 'rejected'
+            state.loading = true
             state.error = ''
         })
         .addCase(getUsers.fulfilled,(state,action)=>{
-            state.status = 'fulfilled'
+            state.loading = false
             state.users = action.payload
             state.error = ''
         })
         .addCase(getUsers.rejected,(state,action)=>{
-            state.status = 'rejected'
-            // state.error = action.payload.error
+            state.loading = false
         })
 }
 })

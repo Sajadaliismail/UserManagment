@@ -17,3 +17,15 @@
 .App-link {
   color: #61dafb;
 }
+
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background: linear-gradient(135deg, #f8e7e4, #968c92); /* Purple gradient background */
+  position: fixed;
+  left: 0;
+}

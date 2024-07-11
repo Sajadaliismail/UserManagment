@@ -6,6 +6,9 @@ import {
 } from '@mui/material';
 import {MDBInput} from 'mdb-react-ui-kit'; 
 import { getUsers } from '../features/userAsyncThunks';
+import {ScaleLoader} from 'react-spinners'
+import './table.css'
+
 
 const UserTable = () => {
 
@@ -15,7 +18,7 @@ const dispatch = useDispatch()
   const [searchQuery, setSearchQuery] = useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const {users,columns} = useSelector((state)=>state.users)
+  const {users,columns,loading} = useSelector((state)=>state.users)
 
   useEffect(()=>{
     dispatch(getUsers())
@@ -44,8 +47,15 @@ const dispatch = useDispatch()
   const filteredUsers = () => {
     if (searchQuery) {
       return users.filter(user =>
-        Object.values(user).some(value =>
-          typeof value === 'string' && value.toLowerCase().includes(searchQuery.toLowerCase())
+        Object.entries(user).some(([key,value] )=>{
+          if (key === '_id') {
+            return false;
+          }
+          if (typeof value === 'string') {
+            return value.toLowerCase().includes(searchQuery.toLowerCase());
+          }
+          return false;
+        }
         )
       );
     }
@@ -63,65 +73,79 @@ const dispatch = useDispatch()
     return sorted.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
   };
 
-  return (
-    <div style={{ height: 400, width: '100%', backgroundColor: '#f5f5f5', padding: '20px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-      <MDBInput 
-        type="text"
-        label="Search..."
-        value={searchQuery}
-        onChange={handleSearchChange}
-        style={{ marginBottom: '10px' }}
+  if (loading) {
+    return <div>
+      <div className="loading-container">
+      <ScaleLoader
+        color="#d43434"
+        height={50}
+        width={10}
+        radius={5}
+        margin={2}
       />
-      <TableContainer component={Paper}>
-        <Table stickyHeader>
-          <TableHead>
-            <TableRow>
+    </div>
+    </div>; 
+  }
+
+  return (
+    <div className="container-table">
+    <MDBInput 
+      type="text"
+      label="Search..."
+      value={searchQuery}
+      onChange={handleSearchChange}
+      className="search-input"
+    />
+    <TableContainer component={Paper}>
+      <Table stickyHeader>
+        <TableHead>
+          <TableRow>
+            {columns.map((column) => (
+              <TableCell key={column.field} className="table-header-cell">
+                <TableSortLabel
+                  active={orderBy === column.field}
+                  direction={orderBy === column.field ? order : 'asc'}
+                  onClick={() => handleRequestSort(column.field)}
+                >
+                  {column.headerName}
+                </TableSortLabel>
+              </TableCell>
+            ))}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {sortedUsers().map((user) => (
+            <TableRow key={user.id}>
               {columns.map((column) => (
-                <TableCell key={column.field} style={{ backgroundColor: '#e0e0e0', color: '#333', fontSize: '16px' }}>
-                  <TableSortLabel
-                    active={orderBy === column.field}
-                    direction={orderBy === column.field ? order : 'asc'}
-                    onClick={() => handleRequestSort(column.field)}
-                  >
-                    {column.headerName}
-                  </TableSortLabel>
+                <TableCell key={column.field} className="table-cell">
+                  {user[column.field]}
                 </TableCell>
               ))}
             </TableRow>
-          </TableHead>
-          <TableBody>
-            {sortedUsers().map((user) => (
-              <TableRow key={user.id}>
-                {columns.map((column) => (
-                  <TableCell key={column.field} style={{ color: '#333', fontSize: '14px' }}>
-                    {user[column.field]}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                rowsPerPageOptions={[10, 25, { label: 'All', value: -1 }]}
-                colSpan={columns.length}
-                count={filteredUsers().length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                SelectProps={{
-                  inputProps: {
-                    'aria-label': 'rows per page',
-                  },
-                  native: true,
-                }}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-              />
-            </TableRow>
-          </TableFooter>
-        </Table>
-      </TableContainer>
-    </div>
+          ))}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              rowsPerPageOptions={[10, 25, { label: 'All', value: -1 }]}
+              colSpan={columns.length}
+              count={filteredUsers().length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              SelectProps={{
+                inputProps: {
+                  'aria-label': 'rows per page',
+                },
+                native: true,
+              }}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </TableRow>
+        </TableFooter>
+      </Table>
+    </TableContainer>
+  </div>
   );
 };
 
