@@ -60,4 +60,4 @@ Deploy the backend on Render following Render's deployment instructions.
 Deploy the frontend on Vercel following Vercel's deployment instructions.
 Update CORS settings on the backend to allow requests from the deployed frontend URL.
 
-user-managment-dun.vercel.app
+[user-managment-dun.vercel.app](https://user-managment-dun.vercel.app/)
