@@ -1,70 +1,62 @@
-# Getting Started with Create React App
+User Management System
+Project Overview
+This project is a user management system built using the MERN stack (MongoDB, Express.js, React.js, Node.js). It includes features such as displaying user information in a table, search functionality with suggestions, adding new users via a form, and database integration.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Technologies Used
+Frontend: React.js with MDB UI for UI components and MUI table for displaying user data.
+Backend: Node.js with Express.js for REST APIs, MongoDB for database storage.
+Deployment: Backend deployed on Render, Frontend deployed on Vercel.
+Other Tools: CORS for connecting backend and frontend.
+Project Structure
+Backend (/server):
 
-## Available Scripts
+Express.js server handling API requests (/server/index.js).
+MongoDB for storing user data (/server/models/User.js).
+REST APIs for CRUD operations (GET, POST, DELETE, PUT).
+Frontend (/client):
 
-In the project directory, you can run:
+React.js frontend with components structured in /client/src/components.
+User Table component (UserTable.js) using MUI table for displaying users.
+New User Form component (AddUserForm.js) for adding new users.
+Features Implemented
+User Table:
 
-### `npm start`
+Displays user information fetched from the backend MongoDB.
+Utilizes MUI table for sorting, pagination, and displaying data.
+Search Functionality:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Search bar above the table with autocomplete suggestions.
+Filters users based on first name, last name, or email.
+New User Form:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Modal form with MDB UI components for adding new users.
+Validates input fields for required information.
+Database Integration:
 
-### `npm test`
+MongoDB used for storing user data.
+Implemented CRUD operations (Create, Read, Update, Delete) via REST APIs.
+Deployment:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Backend deployed on Render for server hosting.
+Frontend deployed on Vercel for client-side hosting.
+Additional Features (Optional)
+Pagination for the user table to handle large datasets.
+Sorting functionality to sort users by different criteria.
+Setup Instructions
+Backend Setup:
 
-### `npm run build`
+Clone the repository and navigate to /server.
+Install dependencies using npm install.
+Set up MongoDB and update connection details in /server/index.js.
+Start the server using npm start.
+Frontend Setup:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Navigate to /client and install dependencies using npm install.
+Update backend URL in /client/src/api/index.js for API calls.
+Start the React development server using npm start.
+Deployment:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Deploy the backend on Render following Render's deployment instructions.
+Deploy the frontend on Vercel following Vercel's deployment instructions.
+Update CORS settings on the backend to allow requests from the deployed frontend URL.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
